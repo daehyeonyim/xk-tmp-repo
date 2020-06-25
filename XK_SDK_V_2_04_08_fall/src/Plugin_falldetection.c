@@ -706,6 +706,39 @@ void makeUIFallResult(char * data, int Nset){
 
 }
 
+int cmd_fall_system(float RRxdata[],int Nset){
+    pthread_mutex_lock(&SendRadar_lock);
+    delay(1000);
+    rserial_t* r = Res[Nset].r;
+    int BindxA[2];
+    BindxA[0] = (*Res[Nset].r[0].BufferIdx-1 + GETDATA_BUFFER_NUMBER)%GETDATA_BUFFER_NUMBER;
+    BindxA[1] = (*Res[Nset].r[1].BufferIdx-1 + GETDATA_BUFFER_NUMBER)%GETDATA_BUFFER_NUMBER;
+
+    if(RRxdata[0] - ((int)RRxdata[0])!=0){
+        char eeech[100];
+        sprintf(eeech,"Error data Received.. CMD: %.2f // %.2f\n",RRxdata[0],RRxdata[1]);
+        LOG_E("PC_UI_FALL",eeech);
+        return -1;
+    }
+
+    int TargetR = RRxdata[0];
+    float* cmdArr = &RRxdata[1];
+    int msgLen;
+
+    for(int li=0;li<15;li++){
+        if(cmdArr[li]==555.555){
+            msgLen = li;
+            break;
+        }
+    }
+
+    for(int rri=0;rri<NUM_RADAR_FALL;rri++){
+        int fd_t = *(Res[Nset].r[rri].fd);
+        if(TargetR == rri || TargetR == 2)
+            write(fd_t,(char*)cmdArr,msgLen*sizeof(float));
+    }
+
+}
 
 int cmd_fall_system_legacy(float RRxdata[],int Nset){
     
