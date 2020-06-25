@@ -22,7 +22,7 @@
 #define CHECK_RATE 1
 // #define UI_SEND_RATE FPS_WMFALL
 #define SYNC_FLOAT_LEGACY 11.031507f
-#define SYNC_FLOAT 4.28001f
+#define SYNC_FLOAT 4.28f
 
 static pthread_t otherDeviceHandle_Thread_t;
 
