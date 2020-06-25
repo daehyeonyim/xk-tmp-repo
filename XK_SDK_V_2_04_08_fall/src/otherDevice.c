@@ -117,8 +117,10 @@ void *otherDeviceHandler(void *data)
                     printf("\nloop\n");
 #endif
                     if(dataf[0] == SYNC_FLOAT_LEGACY){
-                        // printf("Im IN!!\n");
                         cmd_fall_system_legacy(&dataf[1],0);
+                    }
+                    if(dataf[0] == SYNC_FLOAT){
+                        cmd_fall_system(&dataf[1],0);
                     }
                 }
             }else if(otherDevFunc[pi] == RADAR_APP_INOUT && delayPeriodCheck(&appTimeArr[pi],1000/fps_forCheck[pi])){

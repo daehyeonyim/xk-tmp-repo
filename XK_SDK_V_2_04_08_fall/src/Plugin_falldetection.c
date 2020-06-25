@@ -976,13 +976,13 @@ int SaveData(int Nset){
 }
 
 int forLEDctrl(int Nset){
-    // rserial_t* r = Res[Nset].r;
-    
-    // int Bindx = (*Res[Nset].r[0].BufferIdx-1 + GETDATA_BUFFER_NUMBER)%GETDATA_BUFFER_NUMBER;
-    // int SelR = Res[Nset].r[0].data[Bindx][F_ID_LOWER_RADAR];
-    // Bindx = (*Res[Nset].r[SelR].BufferIdx-1 + GETDATA_BUFFER_NUMBER)%GETDATA_BUFFER_NUMBER;
-    // float fRes = r[SelR].data[Bindx][F_STATUS];
     float fRes = get_fstatus(0);
+
+    float* para[2];
+    getRdataBuf(Nset,0,&para[0]);
+    getRdataBuf(Nset,1,&para[1]);
+
+    float LEDctrl = para[0][4+4]*para[1][4+4];
     
     char path[100]={0};
     sprintf(path,PATH_SAVE);
@@ -993,19 +993,35 @@ int forLEDctrl(int Nset){
 
         fprintf(fpd,"%.0f\n",fRes);
 
-        // if(fRes == 2)
-        //     fprintf(fpd,"%d,%d,%d,%.2f\n",255,0,0,0.5);
-        // else if(fRes == 1)
-        //     fprintf(fpd,"%d,%d,%d,%.2f\n",0,0,255,0.5);
-        // else if(fRes == 6)
-        //     fprintf(fpd,"%d,%d,%d,%.2f\n",0,0,255,1.0);
-        // else if(fRes == FALLOFF_STATUS)
-        //     fprintf(fpd,"%d,%d,%d,%.2f\n",0,255,0,0.0);
-        // else if(fRes == EMERGENCY_STATUS)
-        //     fprintf(fpd,"%d,%d,%d,%.2f\n",255,0,255,0.5);
-        // else /*if(fRes == 0)*/
-        //     fprintf(fpd,"%d,%d,%d,%.2f\n",0,255,0,1.0);
-
+        fclose(fpd);
+    }
+    int LED_stat = 0;
+    int LED_flag = 0;
+    {
+        char FilePath[200];
+        sprintf(FilePath,"%sresLED_off.csv",path);
+        FILE * fpd = fopen(FilePath,"r");
+        fscanf(fpd,"%d\n%d",&LED_stat,&LED_flag);
+        fclose(fpd);
+    }
+    if(LED_flag != 1)
+    {
+        char FilePath[200];
+        sprintf(FilePath,"%sresLED_off.csv",path);
+        FILE * fpd = fopen(FilePath,"w");
+        fprintf(fpd,"%.0f\n0\n",LEDctrl);
+        fclose(fpd);
+    }
+    else{
+        for(int rri=0;rri<NUM_RADAR_FALL;rri++){
+            int fd_t = *(Res[Nset].r[rri].fd);
+            float cmdArr[] = {1010.1010,4,LED_stat,255.255,255.255};
+            write(fd_t,(char*)cmdArr,5*sizeof(float));
+        }
+        char FilePath[200];
+        sprintf(FilePath,"%sresLED_off.csv",path);
+        FILE * fpd = fopen(FilePath,"w");
+        fprintf(fpd,"%d\n0\n",LED_stat);
         fclose(fpd);
     }
 
