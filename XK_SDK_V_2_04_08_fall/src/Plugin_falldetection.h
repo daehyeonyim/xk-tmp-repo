@@ -36,6 +36,7 @@ int getNumofSet_fall();
 int getNoData_fall(int Nset);
 float getRadarInfo_fall(int infoN, int numR, int Nset);
 int cmd_fall_system_legacy(float RRxdata[],int Nset);
+int cmd_fall_system(float RRxdata[],int Nset);
 int getRdataBuf(int Nset,int SelR, float** outbuf);
 
 
