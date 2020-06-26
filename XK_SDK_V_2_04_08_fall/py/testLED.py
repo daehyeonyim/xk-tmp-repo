@@ -98,9 +98,10 @@ while True:
             StartBrightness = (StartBrightness+1)%2
             pixels.brightness = StartBrightness
 
-            StartT2 = StartT2 + PeriodT
-            if(CurrT - StartT2 > PeriodT):
-                StartT2 = StartT2 + PeriodT
+            # StartT2 = StartT2 + PeriodT
+            # if(CurrT - StartT2 > PeriodT):
+            #     StartT2 = StartT2 + PeriodT
+            StartT2 = CurrT
 
             colorToggle = (colorToggle + 1)%2
             # print("testsetset")
@@ -179,7 +180,8 @@ while True:
         fp.close()
 
         res = [0,0]
-        StartT3 = StartT3 + PeriodDash
+        # StartT3 = StartT3 + PeriodDash
+        StartT3 = CurrT
 
     if(CurrT - FixedTime_1s > 5):
         FixedTime_1s = (CurrT - CurrT%1)
