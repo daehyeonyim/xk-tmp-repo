@@ -94,6 +94,11 @@ void *otherDeviceHandler(void *data)
                 char UIdata[sizeof(sendPCFallmsg_t)];
                 makeUIFallResult(UIdata, 0); // TODO: Now, only first set of radar is connected with PC.
                 write(cpc.fd,UIdata,sizeof(sendPCFallmsg_t));
+                // for(int li=0;li<sizeof(sendPCFallmsg_t);li++){
+                //     if(li%10 == 0) printf("\n");
+                //     printf("%02X ",UIdata[li]);
+                // }
+                // printf("\n");
 
                 int len;
                 unsigned char recvData[4096];

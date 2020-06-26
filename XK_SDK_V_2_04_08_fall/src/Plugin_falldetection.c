@@ -728,7 +728,7 @@ int cmd_fall_system(float RRxdata[],int Nset){
     int msgLen;
 
     for(int li=0;li<15;li++){
-        if(cmdArr[li]==555.555){
+        if(cmdArr[li]==555.555f){
             msgLen = li;
             break;
         }
@@ -740,6 +740,10 @@ int cmd_fall_system(float RRxdata[],int Nset){
             write(fd_t,(char*)cmdArr,msgLen*sizeof(float));
     }
 
+    LOG_I("PC_UI_FALL","Custom command");
+    delay(500);
+    pthread_mutex_unlock(&SendRadar_lock);
+    return 0;
 }
 
 int cmd_fall_system_legacy(float RRxdata[],int Nset){
@@ -796,7 +800,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
             cmdArr[cursor++] = 100100;
             cmdArr_after[cursor_a++] = -1;
 
-            write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+            write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
             sprintf(CMD_name,"CMD DEFAULT");
         }
         else if(RRxdata[0] == (float)CMD_F_UI_END_RANGE){
@@ -809,7 +813,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
 
             cmdArr_after[cursor_a++] = -1;
 
-            write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+            write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
             sprintf(CMD_name,"CMD END RANGE, val: %.2f",RRxdata[1]);
         }
         else if(RRxdata[0] == (float)CMD_F_UI_LED){
@@ -818,7 +822,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
             cmdArr[cursor++] = end_f;
             cmdArr[cursor++] = end_f;
 
-            write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+            write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
             sprintf(CMD_name,"CMD LED, val: %.2f",RRxdata[1]);
         }
         else if(RRxdata[0] == (float)CMD_F_UI_CALIBRATION){
@@ -826,7 +830,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
             cmdArr[cursor++] = 5005;
             cmdArr[cursor++] = RRxdata[1];
             
-            write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+            write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
             sprintf(CMD_name,"CMD CALIBRATION, val: %.2f",RRxdata[1]);
         }
         else if(RRxdata[0] == (float)CMD_F_UI_AUTO_S_ONOFF){
@@ -835,7 +839,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
             cmdArr[cursor++] = end_f;
             cmdArr[cursor++] = end_f;
 
-            write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+            write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
             sprintf(CMD_name,"CMD AUTO SENS ONOFF, val: %.2f",RRxdata[1]);
         }
         else if(RRxdata[0] == (float)CMD_F_UI_RADAR_H_1 || RRxdata[0] == (float)CMD_F_UI_RADAR_H_2){
@@ -846,7 +850,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
                 cmdArr[cursor++] = RRxdata[1];
                 cmdArr[cursor++] = end_f;
 
-                write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+                write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
                 sprintf(CMD_name,"CMD CHANGE RADAR%d H, val: %.2f",rri,RRxdata[1]);
             }
         }
@@ -857,7 +861,7 @@ int cmd_fall_system_legacy(float RRxdata[],int Nset){
                 cmdArr[cursor++] = end_f;
                 cmdArr[cursor++] = end_f;
 
-                write(fd_t,(char*)(&cmdArr),cursor*sizeof(float));
+                write(fd_t,(char*)(cmdArr),cursor*sizeof(float));
                 sprintf(CMD_name,"CMD CHANGE RADAR%d ID, val: %.2f",rri,RRxdata[1]);
             }
         }else {
