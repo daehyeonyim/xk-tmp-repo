@@ -28,6 +28,8 @@
 #define F_ID_HIGHER_RADAR 				48
 #define BED_EXT_STATUS	 				75
 #define FIDGETING_STATUS 				76
+#define BED_ENABLE	 					64
+#define BED_REGION 						77
 #define RADAR_ENDRANGE 					6
 #define RADAR_DEV_ID 					4
 

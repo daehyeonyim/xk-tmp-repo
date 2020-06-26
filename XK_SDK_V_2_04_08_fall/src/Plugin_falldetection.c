@@ -698,8 +698,10 @@ void makeUIFallResult(char * data, int Nset){
     sendmsg->Rheight[1]                     = para[1][R_HEIGHT];//
     sendmsg->ID[0]                          = para[0][MOVEMETN_SCORE];// Change the parameter ID -> Vital Score
     sendmsg->ID[1]                          = para[1][MOVEMETN_SCORE];//
-    sendmsg->bedExitStatus                  = para[SelR][BED_EXT_STATUS];// Change the parameter ID -> Vital Score
+    sendmsg->bedExitStatus                  = para[SelR][BED_EXT_STATUS];// 
     sendmsg->fidgetingStatus                = para[SelR][FIDGETING_STATUS];//
+    sendmsg->bedEnable                      = para[SelR][BED_ENABLE];//
+    sendmsg->bedRegion                      = para[SelR][BED_REGION];//
     memcpy(sendmsg->ender, "ENDX", 4);
 
     memcpy(data,sendmsg,sizeof(sendPCFallmsg_t));

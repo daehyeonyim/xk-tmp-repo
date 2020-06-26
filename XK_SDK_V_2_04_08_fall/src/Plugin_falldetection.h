@@ -63,6 +63,8 @@ typedef struct { // TODO: for connection of PC
 	float ID[2];
 	float bedExitStatus;
 	float fidgetingStatus;
+    float bedEnable;
+    float bedRegion;
 	char ender[4];
 } sendPCFallmsg_t;
 
