@@ -51,14 +51,15 @@ def check_myts_at():
     return 0
 
 inetFlag = check_inet()
-mytsFlag = check_myts_at()
+# mytsFlag = check_myts_at()
+mytsFlag = 0
 
 print(mytsFlag)
 print(inetFlag)
 
 # Hour
 XK_LOG_SEGLEN_H = 20/60
-XK_LOG_DELPERIOD_H = 3
+XK_LOG_DELPERIOD_H = 18
 # XK_LOG_SEGLEN_H = 12/3600 # for Debugging
 # XK_LOG_DELPERIOD_H = 24/3600
 
